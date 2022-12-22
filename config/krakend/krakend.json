@@ -1,0 +1,79 @@
+{
+    "$schema": "https://www.krakend.io/schema/v3.json",
+    "version": 3,
+    "endpoints": [
+        {  
+            "endpoint": "/v1/medcards",
+            "method": "GET",
+            "backend": [{
+                "url_pattern": "/v1/cards",
+                "method": "GET",
+                "host": ["http://medcards"],
+                "is_collection": true,
+                "mapping": {
+                    "collection": "medcards"
+                }
+            }]
+        },
+        {  
+            "endpoint": "/v1/medcards/{id}",
+            "method": "GET",
+            "output_encoding": "no-op",
+            "backend": [{
+                "url_pattern": "/v1/cards/{id}",
+                "method": "GET",
+                "host": ["http://medcards"]
+            }]
+        },
+
+        {  
+            "endpoint": "/v1/doctors",
+            "method": "GET",
+            "backend": [{
+                "url_pattern": "/v1/drs",
+                "method": "GET",
+                "host": ["http://doctors"],
+                "is_collection": true,
+                "mapping": {
+                    "collection": "doctors"
+                }
+            }]
+        },
+        {  
+            "endpoint": "/v1/doctors/{id}",
+            "method": "GET",
+            "output_encoding": "no-op",
+            "backend": [{
+                "url_pattern": "/v1/drs/{id}",
+                "method": "GET",
+                "host": ["http://doctors"]
+            }]
+        },
+
+        {
+            "endpoint": "/v1/data",
+            "method": "GET",
+            "backend": [
+                {
+                    "url_pattern": "/v1/cards",
+                    "method": "GET",
+                    "host": ["http://medcards"],
+                    "is_collection": true,
+                    "mapping": {
+                    "collection": "medcards"
+                    }
+                },
+                {
+                    "url_pattern": "/v1/drs",
+                    "method": "GET",
+                    "host": ["http://doctors"],
+                    "is_collection": true,
+                    "mapping": {
+                    "collection": "doctors"
+                    }
+                }
+            ]
+        }
+    ],
+    "extra_config": {}
+}
